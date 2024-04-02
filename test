@@ -1,0 +1,12 @@
+select distinct b.invoice_id,c.CHECK_NUMBER,c.CHECK_DATE,b.ACCOUNTING_DATE "GL DATE",c.AMOUNT "Check AMOUNT",b.amount Inv_Pymt_amount,c.bank_account_name,
+nvl (c.exchange_rate,1) "PMT RATE",c.currency_code "PAY Currency",a.vendor_name Supplier,a.doc_sequence_value vaucher_num,a.invoice_num,a.INVOICE_TYPE,a.invoice_date,
+a.invoice_amount,nvl(a.amount_paid,0) Amount_Paid,a.amount_withheld,a.total_tax_amount Tax,a.cancelled_amount,a.payment_status_flag,a.gl_date,a.creation_date,a.approved_amount,
+a.invoice_currency_code Currency,nvl (a.exchange_rate,1) "INV RATE",a.description,a.invoice_type_lookup_code Type,a.approval_status_lookup_code,a.vendor_number,a.po_number,
+a.attribute2 PO_1,a.attribute3 PO_2,a.attribute4 PO_3,c.check_id,c.void_date,b.INVOICE_PAYMENT_ID,b.REVERSAL_INV_PMT_ID
+from ap_checks_all c,ap_invoice_payments_all b, ap_invoices_v a
+where c.check_id = b.check_id
+and b.invoice_id = a.invoice_id
+----and c.CHECK_DATE in  ('NOV-17','DEC-17','JAN-18')
+----and c.void_date is  null
+and a.amount_withheld is not null 
+----and  a.doc_sequence_value  = 13277
